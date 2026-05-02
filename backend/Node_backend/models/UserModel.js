@@ -1,70 +1,104 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
-const User = new mongoose.Schema({
+const documentSchema = new mongoose.Schema({
+  url: String,
+  type: {
+    type: String,
+    enum: ["ID_PROOF", "CERTIFICATE"]
+  },
+  uploadedAt: {
+    type: Date,
+    default: Date.now
+  }
+});
 
-    //Data Field
-    name: {type: String},
-    email: {type: String, unique: true},
-    phoneNumber: {type: String, unique: true},
+const userSchema = new mongoose.Schema({
 
-    //Password
-    password: {type: String},
-    confirmPassword: {type: String},
+  name: {
+    type: String,
+    trim: true
+  },
 
-    //Role
-    role:
-    {
-        type: String,
-        enum : ["User", "Rescue", "Admin"],
-        default: "User"
-    },
+  phoneNumber: {
+    type: String,
+    unique: true,
+    sparse: true,
+    index: true
+  },
 
-    //Status
-    status:
-    {
-        type:  String,
-        enum: ["Blocked", "Pending", "Active"],
-        default: "Active"
-    },
+  email: {
+    type: String,
+    unique: true,
+    sparse: true,
+    lowercase: true,
+    trim: true
+  },
 
-    location:
-    {
-        lat: {type: String},
-        lon: {type: String}
-    },
-
-    //Skills and verifiction
-    skills: [String], // for rescue
-    documents: [
-        {
-        url: String,
-        type: String, // ID_PROOF, CERTIFICATE
-        uploadedAt: {
-            type: Date,
-            default: Date.now
-        }
-        }
-    ],
-
-    verification: {
-        isVerified: {
-        type: Boolean,
-        default: false
-        },
-        verifiedBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
-        },
-        verifiedAt: Date
-    },
-
-    availability: {
-        type: String,
-        enum: ["FULL_TIME", "PART_TIME", "OFF_DUTY"],
-        default: "OFF_DUTY"
+  password: {
+    type: String,
+    required: function () {
+      return !this.isGuest;
     }
+  },
+
+  role: {
+    type: String,
+    enum: ["USER", "RESCUE", "ADMIN"],
+    default: "USER"
+  },
+
+  status: {
+    type: String,
+    enum: ["ACTIVE", "PENDING", "BLOCKED"],
+    default: "PENDING"
+  },
+
+  isGuest: {
+    type: Boolean,
+    default: true
+  },
+
+  location: {
+    current: {
+      lat: { type: Number, default: null },
+      lon: { type: Number, default: null },
+      updatedAt: Date
+    },
+    lastKnown: {
+      lat: { type: Number, default: null },
+      lon: { type: Number, default: null },
+      updatedAt: Date
+    }
+  },
+
+  skills: [String],
+
+  availability: {
+    type: String,
+    enum: ["FULL_TIME", "PART_TIME", "OFF_DUTY"],
+    default: "OFF_DUTY"
+  },
+
+  documents: [documentSchema],
+
+  verification: {
+    isVerified: { type: Boolean, default: false },
+    verifiedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    },
+    verifiedAt: Date
+  },
+
+  lastLogin: Date,
+  isLoggedIn: {
+    type: Boolean,
+    default: false
+  }
 
 }, { timestamps: true });
 
+// 🔥 indexes
+userSchema.index({ role: 1, status: 1 });
 
-module.exports = mongoose.model("User", userSchema);
+export const User = mongoose.model("User", userSchema);
