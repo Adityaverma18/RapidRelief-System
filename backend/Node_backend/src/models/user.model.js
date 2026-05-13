@@ -50,7 +50,7 @@ const userSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ["ACTIVE", "PENDING", "BLOCKED"],
-    default: "PENDING"
+    default: "ACTIVE"
   },
 
   isGuest: {

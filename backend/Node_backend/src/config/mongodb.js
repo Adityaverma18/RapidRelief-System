@@ -1,13 +1,14 @@
 import mongoose from 'mongoose'
+import { ENV } from './env.js';
 
 const connectDB = async () => {
     try {
         mongoose.connection.on('connected', () =>{
-            console.log("MongoDB databse connected");
+            console.log("MongoDB database connected");
         })
 
         await mongoose.connect(
-            `${process.env.MONGODB_URL}rapidrelief?retryWrites=true&w=majority`
+            `${ENV.MONGODB_URI}rapidrelief?retryWrites=true&w=majority`
         );
 
     } catch (error) {
