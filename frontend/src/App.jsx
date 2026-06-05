@@ -1,20 +1,11 @@
-import React from 'react'
-import AppRoutes from './routes/AppRoutes'
-import Navbar from './components/common/Navbar.jsx'
-import Footer from './components/common/Footer.jsx'
-import Loader from './components/common/Loader.jsx'
+import AppRoutes from "./routes/AppRoutes.jsx";
+import ToastContainer from "./components/common/Toast.jsx";
 
+const App = () => (
+  <>
+    <AppRoutes />
+    <ToastContainer />
+  </>
+);
 
-const App = () => {
-  return (
-    <div>
-      <Navbar />
-   
-      <AppRoutes />
-      <Footer/>
-    </div>
-    
-  )
-}
-
-export default App
+export default App;

@@ -1,10 +1,10 @@
-import React from 'react'
-import RegisterForm from '../../components/auth/RegisterForm'
+import RegisterForm from "../../components/auth/RegisterForm.jsx";
+import PublicLayout from "../../layouts/PublicLayout.jsx";
 
-const Register = () => {
-  return (
+const Register = () => (
+  <PublicLayout hideFooter>
     <RegisterForm />
-  )
-}
+  </PublicLayout>
+);
 
-export default Register
+export default Register;

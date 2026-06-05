@@ -1,22 +1,19 @@
-import React from "react";
-import { logo } from "../../assets/assets";
-
-const Loader = () => {
-  return (
-    <div className="fixed inset-0 flex flex-col items-center justify-center  bg-slate-950 z-50">
-      <img
-        src={logo}
-        alt="RapidRelief"
-        className="w-20 h-20 mb-4 animate-pulse rounded-4xl"
-      />
-
-      <div className="h-12 w-12 animate-spin rounded-full border-4 border-slate-700 border-t-teal-500"></div>
-
-      <p className="mt-4 text-slate-300">
-        Loading...
-      </p>
+const Loader = ({ fullScreen = false, text = "Loading..." }) => {
+  const content = (
+    <div className="flex flex-col items-center gap-3">
+      <div className="w-10 h-10 border-2 border-teal-500/30 border-t-teal-400 rounded-full animate-spin" />
+      <p className="text-slate-400 text-sm">{text}</p>
     </div>
   );
+
+  if (fullScreen) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-navy-950">
+        {content}
+      </div>
+    );
+  }
+  return <div className="flex items-center justify-center py-12">{content}</div>;
 };
 
 export default Loader;

@@ -1,17 +1,28 @@
-import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import Loader from "./Loader";
+import useAuth from "../../hooks/useAuth.js";
+import { getToken, getUser } from "../../utils/token.js";
+import Loader from "./Loader.jsx";
+import { ROLE_DASHBOARD } from "../../utils/constants.js";
 
-const Protected = () => {
-  const token = localStorage.getItem("token");
+const ProtectedRoute = ({ roles }) => {
+  const { user, loading } = useAuth();
+  const token = getToken();
+  const storedUser = getUser();
+  const activeUser = user || storedUser;
+  const isAuthenticated = !!token;
 
-  const loading = false;
+  if (loading) return <Loader fullScreen />;
 
-  if (loading) {
-    return <Loader />;
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace state={{ from: window.location.pathname }} />;
   }
 
-  return token ? <Outlet /> : <Navigate to="/login" replace />;
+  if (roles && activeUser?.role && !roles.includes(activeUser.role)) {
+    const redirect = ROLE_DASHBOARD[activeUser.role] || "/";
+    return <Navigate to={redirect} replace />;
+  }
+
+  return <Outlet />;
 };
 
-export default Protected;
+export default ProtectedRoute;

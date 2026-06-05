@@ -1,115 +1,111 @@
-import React, { useState } from "react";
-import { Menu, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Menu, X, LogOut, Shield, AlertTriangle } from "lucide-react";
 import { logo } from "../../assets/assets.js";
+import useAuth from "../../hooks/useAuth.js";
+import { getUser } from "../../utils/token.js";
+import NotificationPanel from "./NotificationPanel.jsx";
+import Button from "./Button.jsx";
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const publicLinks = [
+  { name: "Features", href: "/#features" },
+  { name: "About", to: "/about" },
+  { name: "Contact", href: "/#contact" },
+];
 
-  const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Report Incident", path: "/report" },
-    { name: "Volunteer", path: "/volunteer" },
-    { name: "About", path: "/about" },
-  ];
+const Navbar = ({ variant = "public" }) => {
+  const [open, setOpen] = useState(false);
+  const { isAuthenticated, user, logout } = useAuth();
+  const navigate = useNavigate();
+  const activeUser = user || getUser();
+
+  const dashboardHome =
+    activeUser?.role === "ADMIN" ? "/admin/dashboard"
+    : activeUser?.role === "RESCUE" ? "/rescue/dashboard"
+    : "/citizen/dashboard";
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/");
+  };
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-slate-950/70 backdrop-blur-md border-b border-white/10">
+    <nav className="fixed top-0 left-0 w-full z-50 glass-nav">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <img
-            src={logo}
-            alt="RapidRelief Logo"
-            className="w-9 h-9 object-contain"
-          />
-
-          <span className="text-white font-bold text-lg md:text-xl">
-            RapidRelief
-          </span>
+        <Link to={isAuthenticated ? dashboardHome : "/"} className="flex items-center gap-2.5 group">
+          <img src={logo} alt="Rapid Relief" className="w-9 h-9 object-contain" />
+          <div>
+            <span className="text-white font-bold text-lg leading-tight block">Rapid Relief</span>
+            {variant === "dashboard" && activeUser?.role && (
+              <span className="text-[10px] text-teal-400 uppercase tracking-wider">{activeUser.role} Portal</span>
+            )}
+          </div>
         </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8 text-white">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              to={link.path}
-              className="hover:text-teal-400 transition-colors duration-300"
-            >
-              {link.name}
-            </Link>
-          ))}
-        </div>
-
-        {/* Desktop Buttons */}
-        <div className="hidden md:flex items-center gap-3">
-          <Link
-            to="/login"
-            className="px-5 py-2 rounded-lg border border-white/20 text-white hover:bg-white/10 transition"
-          >
-            Sign In
-          </Link>
+        <div className="hidden md:flex items-center gap-5">
+          {variant === "public" && !isAuthenticated && publicLinks.map((l) =>
+            l.to ? (
+              <Link key={l.name} to={l.to} className="text-slate-300 hover:text-teal-400 text-sm transition">{l.name}</Link>
+            ) : (
+              <a key={l.name} href={l.href} className="text-slate-300 hover:text-teal-400 text-sm transition">{l.name}</a>
+            )
+          )}
 
           <Link
-            to="/register"
-            className="px-5 py-2 rounded-lg bg-teal-500 text-white hover:bg-teal-600 transition"
+            to="/report"
+            className="flex items-center gap-1.5 text-sm font-medium text-teal-400 hover:text-teal-300 border border-teal-500/30 bg-teal-500/10 px-3 py-1.5 rounded-lg transition"
           >
-            Sign Up
+            <AlertTriangle size={15} />
+            Report
           </Link>
+
+          {isAuthenticated && (
+            <>
+              <NotificationPanel />
+              <span className="text-slate-400 text-sm flex items-center gap-1.5">
+                <Shield size={14} className="text-teal-400" />
+                {activeUser?.name || activeUser?.role}
+              </span>
+              <Button variant="ghost" size="sm" onClick={handleLogout}>
+                <LogOut size={16} /> Logout
+              </Button>
+            </>
+          )}
+          {!isAuthenticated && (
+            <>
+              <Link to="/login" className="text-slate-300 hover:text-white text-sm transition">Sign In</Link>
+              <Link to="/register">
+                <Button size="sm">Get Started</Button>
+              </Link>
+            </>
+          )}
         </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden text-white"
-          onClick={() => setIsOpen((prev) => !prev)}
-        >
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
+        <button className="md:hidden text-white p-2" onClick={() => setOpen(!open)}>
+          {open ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
-      <div
-        className={`md:hidden overflow-hidden transition-all duration-300 ${
-          isOpen ? "max-h-[500px]" : "max-h-0"
-        }`}
-      >
-        <div className="bg-slate-950/95 backdrop-blur-md border-t border-white/10 px-4 py-5">
-
-          <div className="flex flex-col gap-5 text-white">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.path}
-                onClick={() => setIsOpen(false)}
-                className="hover:text-teal-400 transition"
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
-
-          <div className="flex flex-col gap-3 mt-6">
-            <Link
-              to="/login"
-              onClick={() => setIsOpen(false)}
-              className="w-full text-center py-2 border border-white/20 rounded-lg text-white"
-            >
-              Sign In
-            </Link>
-
-            <Link
-              to="/register"
-              onClick={() => setIsOpen(false)}
-              className="w-full text-center py-2 bg-teal-500 rounded-lg text-white font-semibold"
-            >
-              Sign Up
-            </Link>
-          </div>
-
+      {open && (
+        <div className="md:hidden border-t border-white/10 bg-navy-950/95 backdrop-blur-xl px-4 py-4 space-y-3 animate-fade-in">
+          {variant === "public" && publicLinks.map((l) =>
+            l.to ? <Link key={l.name} to={l.to} onClick={() => setOpen(false)} className="block text-slate-300 py-2">{l.name}</Link>
+            : <a key={l.name} href={l.href} onClick={() => setOpen(false)} className="block text-slate-300 py-2">{l.name}</a>
+          )}
+          <Link to="/report" onClick={() => setOpen(false)}
+            className="flex items-center gap-2 text-teal-400 py-2 font-medium">
+            <AlertTriangle size={16} /> Report Incident
+          </Link>
+          {isAuthenticated ? (
+            <Button variant="secondary" className="w-full" onClick={() => { handleLogout(); setOpen(false); }}>Logout</Button>
+          ) : (
+            <>
+              <Link to="/login" onClick={() => setOpen(false)} className="block text-center py-2 text-slate-300">Sign In</Link>
+              <Link to="/register" onClick={() => setOpen(false)}><Button className="w-full">Get Started</Button></Link>
+            </>
+          )}
         </div>
-      </div>
+      )}
     </nav>
   );
 };

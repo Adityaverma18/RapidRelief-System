@@ -1,10 +1,10 @@
-import React from 'react'
-import LoginForm from '../../components/auth/Loginform'
+import LoginForm from "../../components/auth/Loginform.jsx";
+import PublicLayout from "../../layouts/PublicLayout.jsx";
 
-const Login = () => {
-  return (
+const Login = () => (
+  <PublicLayout hideFooter>
     <LoginForm />
-  )
-}
+  </PublicLayout>
+);
 
-export default Login
+export default Login;
