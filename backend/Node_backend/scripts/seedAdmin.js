@@ -3,6 +3,9 @@ import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import { fileURLToPath } from "url";
 import path from "path";
+import dns from "dns"
+
+dns.setServers(["8.8.8.8","8.8.4.4"])
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.join(__dirname, "../.env") });
