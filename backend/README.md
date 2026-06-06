@@ -1,192 +1,252 @@
-# 🚨 RapidRelief Backend
+# Intelligent Disaster Management System — Backend
 
-## Intelligent Disaster Management & Emergency Response System
-
-RapidRelief is an AI-powered disaster management platform designed to improve emergency response, resource allocation, and rescue coordination during natural and man-made disasters.
-
-The backend acts as the central command system responsible for managing incidents, coordinating rescue operations, predicting resource requirements, and providing real-time updates to citizens, rescue personnel, and administrators.
-
-By combining machine learning, geospatial optimization, cloud infrastructure, and real-time communication, RapidRelief enables faster and more efficient disaster response.
+A scalable disaster management backend system built using Node.js, Express.js, MongoDB, Python FastAPI, Machine Learning, and KD-tree spatial optimization.
 
 ---
 
-## 🌟 Key Features
+# 🚀 Features
 
-### 🚨 Incident Management
-
-* Report and monitor disaster incidents
-* Track incident lifecycle in real time
-* Store precise geolocation data
-* Prioritize emergencies based on severity
-
-### 🚑 Rescue Coordination
-
-* Assign rescue personnel automatically
-* Track rescue team availability
-* Manage rescue missions and status updates
-* Verify volunteer and rescue worker credentials
-
-### 🧠 AI Resource Prediction
-
-The system predicts emergency resource requirements using machine learning.
-
-Predicted resources include:
-
-* Rescue Teams
-* Ambulances
-* Medical Kits
-* Food Packets
-
-Predictions are generated using:
-
-* Disaster Type
-* Severity Level
-* Affected Population
-* Rainfall
-* Infrastructure Damage
-* Road Blockage
-* Medical Need Level
-
-### 📍 Geospatial Optimization
-
-RapidRelief uses spatial search algorithms to:
-
-* Locate nearest rescue teams
-* Find nearby assistance centers
-* Optimize rescue deployment
-* Reduce emergency response time
-
-### ⚡ Real-Time Communication
-
-Socket.IO enables:
-
-* Live incident updates
-* Rescue assignment notifications
-* Resource status updates
-* Real-time tracking
-
-### ☁️ Cloud Infrastructure
-
-* MongoDB Atlas
-* Cloudinary Storage
-* Scalable API Architecture
+## 🔐 Authentication & Authorization
+- JWT authentication
+- Session management
+- Role-based access control
+- User / Rescue / Admin roles
 
 ---
 
-## 👥 User Roles
-
-### Citizen (USER)
-
-Citizens can:
-
-* Report disasters
-* Request assistance
-* Track rescue progress
-* View nearby assistance centers
-
-### Rescue Personnel (RESCUE)
-
-Rescue personnel can:
-
-* Receive rescue assignments
-* Update mission status
-* Manage availability
-* Upload verification documents
-
-### Administrator (ADMIN)
-
-Administrators can:
-
-* Monitor active incidents
-* Verify rescue personnel
-* Manage resources
-* Analyze disaster statistics
-* Control overall operations
+## 🚨 Incident Management
+- Create disaster incidents
+- Track incident lifecycle
+- Store geolocation data
+- Real-time updates
 
 ---
 
-## 🏗️ System Architecture
+## 🚑 Rescue Management
+- Rescue personnel verification
+- Task assignment
+- Rescue status tracking
+- Document uploads
 
-```text
-Citizen / Rescue / Admin
-            │
-            ▼
-      React Frontend
-            │
-            ▼
-    Node.js + Express API
-            │
-    ┌───────┼────────┐
-    ▼       ▼        ▼
-MongoDB  Cloudinary  Socket.IO
-    │
-    ▼
- FastAPI ML Service
-    │
-    ▼
- Resource Prediction
- & Rescue Allocation
+---
+
+## 🧠 ML + Optimization
+- Python FastAPI ML microservice
+- Multi-output regression
+- Predict:
+  - rescue teams
+  - ambulances
+  - food packets
+  - medical kits
+- KD-tree nearest rescue allocation
+
+---
+
+## ⚡ Real-Time System
+- Socket.IO integration
+- Live incident updates
+- Rescue tracking
+- Status notifications
+
+---
+
+## ☁️ Cloud Integration
+- MongoDB Atlas
+- Cloudinary document storage
+
+---
+
+# 🏗️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Backend | Node.js + Express.js |
+| Database | MongoDB |
+| ML Service | FastAPI |
+| ML Library | scikit-learn |
+| Spatial Optimization | SciPy KD-tree |
+| Real-Time | Socket.IO |
+| Cloud Storage | Cloudinary |
+
+---
+
+# 📁 Backend Structure
+
+```bash
+backend/
+│
+│──Node_backend
+│   │
+│   ├── src/
+│   │   │
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── middleware/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   ├── services/
+│   │   ├── utils/
+│   │   ├── uploads/
+│   │   └── app.js
+│   │
+│   │──.env
+│   │── index.js
+│   ├── package-lock.json
+│   └── package.json
+│ 
+│
+│──Python_backend
+│   │
+│   ├── app/
+│   │   │
+│   │   ├── ml/
+│   │   ├── routes/
+│   │   ├── schemas/
+│   │   ├── services/
+│   │   └── spatial/
+│   │
+│   │── __pycachae__
+│   │── main.py
+│   └── requirement.txt
+│
+└── README.md
 ```
 
----
+## ⚙️ Installation
 
-## 🛠️ Technology Stack
+# 1. Clone Repository
 
-### Backend
+```bash
+git clone <repository_url>
+```
 
-* Node.js
-* Express.js
-* MongoDB
-* Mongoose
+# 2. Install Dependencies
 
-### Authentication
+```bash
+npm install
+```
 
-* JWT
-* bcrypt
+# 3. Create .env
 
-### Cloud Services
+```bash
+PORT=3000
 
-* MongoDB Atlas
-* Cloudinary
+MONGO_URI=your_mongodb_uri
 
-### Machine Learning
+JWT_SECRET=your_secret_key
 
-* FastAPI
-* Scikit-Learn
-* Random Forest
-* Multi-Output Regression
+PYTHON_SERVICE_URL=http://localhost:5001
 
-### Optimization
+CLOUDINARY_CLOUD_NAME=your_cloud_name
 
-* KD-Tree Spatial Search
-* Nearest Resource Allocation
+CLOUDINARY_API_KEY=your_api_key
 
-### Real-Time Communication
+CLOUDINARY_API_SECRET=your_api_secret
+```
 
-* Socket.IO
+## ▶️ Run Backend
+# Development Mode
 
----
+```bash
+npm start
+```
 
-## 🎯 Project Goals
+## 🧠 Python ML Service
 
-* Improve emergency response time
-* Optimize resource allocation
-* Enhance rescue coordination
-* Provide real-time situational awareness
-* Support scalable disaster management operations
+# The backend communicates with a separate Python FastAPI service for:
 
----
+ML prediction
+KD-tree allocation
 
-## 🚀 Future Enhancements
+Python service runs on:
 
-* Offline-first architecture
-* Mesh network communication
-* Satellite communication support
-* AI incident prioritization
-* Route optimization using live traffic data
-* Predictive disaster analytics
+```bash
+http://localhost:5001
+```
 
----
+## 📡 API Modules
+
+Module	Endpoint
+Auth	/api/auth/*
+Incident	/api/incidents/*
+Rescue	/api/rescue/*
+Assignment	/api/assignments/*
+Admin	/api/admin/*
+
+## 🔐 Authentication
+
+Uses:
+
+JWT tokens
+Session model validation
+
+Protected routes require:
+```bash
+Authorization: Bearer <token>
+```
+
+## 📂 File Uploads
+
+Uploads handled using:
+
+Multer
+Cloudinary
+
+Supported file types:
+
+PDF
+JPG
+PNG
+## ⚡ Real-Time Events
+
+Socket.IO events include:
+
+incident updates
+rescue assignments
+status changes
+live tracking
+## 🧠 Machine Learning
+
+The ML pipeline predicts:
+
+teams required
+ambulances required
+food packets required
+medical kits required
+
+Based on:
+
+severity
+population
+disaster type
+rainfall
+infrastructure damage
+road blockage
+medical need level
+more
+
+## 🌍 Spatial Optimization
+
+KD-tree nearest-neighbor search is used to:
+
+locate nearest rescue teams
+optimize response allocation
+
+
+## 🛡️ Security Features
+Password hashing using bcrypt
+JWT authentication
+Role-based authorization
+Session tracking
+File validation
+Protected upload routes
+## 🚀 Future Improvements
+Live map tracking
+Offline-first support
+SMS/Satellite fallback
+Advanced analytics
+Traffic-aware routing
+AI-based prioritization
 
 ## 👨‍💻 Author
 
@@ -198,4 +258,4 @@ B.Tech Engineering Student
 
 ## 📄 License
 
-This project is developed for educational, research, and disaster management purposes.
+This project is for educational and research purposes.
