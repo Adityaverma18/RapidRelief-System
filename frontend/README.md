@@ -1,16 +1,21 @@
 # RapidRelief - Frontend
 
+🚀 **Live Demo:**
+https://rapid-relief-system-cs4ihclf5-aditya-vermas-projects-835bd38a.vercel.app/
+
+---
+
 ## Overview
 
 RapidRelief is an Intelligent Disaster Management System designed to improve disaster response through real-time coordination, resource allocation, and AI-assisted decision making.
 
-The frontend provides separate interfaces for:
+The frontend provides dedicated interfaces for:
 
 * Citizens (Users)
 * Rescue Personnel
 * Administrators
 
-The application is built using React, Vite, Tailwind CSS, Axios, React Router, Socket.IO, and React Leaflet.
+The application is built using React, Vite, Tailwind CSS, Axios, React Router, Socket.IO Client, and React Leaflet.
 
 ---
 
@@ -132,7 +137,7 @@ src/
 git clone <repository-url>
 ```
 
-### Navigate To Frontend
+### Navigate To Frontend Directory
 
 ```bash
 cd frontend
@@ -148,7 +153,7 @@ npm install
 
 ## Environment Variables
 
-Create a `.env` file in the frontend root.
+Create a `.env` file in the project root.
 
 ```env
 VITE_API_URL=/api
@@ -156,15 +161,27 @@ VITE_SOCKET_URL=http://localhost:8000
 VITE_BACKEND_URL=http://localhost:8000
 ```
 
+For production deployment, replace localhost URLs with your deployed backend URLs.
+
+Example:
+
+```env
+VITE_API_URL=https://rapidrelief-system.onrender.com/api
+VITE_SOCKET_URL=https://rapidrelief-system.onrender.com
+VITE_BACKEND_URL=https://rapidrelief-system.onrender.com
+```
+
 ---
 
-## Run Development Server
+## Running the Development Server
+
+Start the development server:
 
 ```bash
 npm run dev
 ```
 
-Frontend will run on:
+The application will be available at:
 
 ```text
 http://localhost:5173
@@ -172,10 +189,18 @@ http://localhost:5173
 
 ---
 
-## Build For Production
+## Production Build
+
+Create an optimized production build:
 
 ```bash
 npm run build
+```
+
+Preview the production build locally:
+
+```bash
+npm run preview
 ```
 
 ---
@@ -184,32 +209,55 @@ npm run build
 
 The frontend communicates with:
 
-### Node.js Backend
+### Backend API
 
 ```text
 http://localhost:8000/api
 ```
 
-### Python ML Service
+### Machine Learning Service
 
 Resource prediction requests are handled through the backend, which communicates with the FastAPI machine learning service.
 
 ---
 
-## Authentication
+## Authentication & Authorization
 
-Authentication is handled using:
+Authentication is implemented using:
 
 * JWT Access Tokens
-* Auth Context
+* React Context API
 * Protected Routes
 * Role-Based Authorization
 
-Roles:
+### Supported Roles
 
 * USER
 * RESCUE
 * ADMIN
+
+---
+
+## Real-Time Communication
+
+RapidRelief uses Socket.IO for:
+
+* Live Incident Updates
+* Rescue Assignment Notifications
+* Status Tracking
+* Real-Time Dashboard Updates
+
+---
+
+## Maps & Location Services
+
+The application integrates React Leaflet to provide:
+
+* Incident Mapping
+* Rescue Team Tracking
+* Assistance Center Locations
+* Safe Zone Visualization
+* Disaster Monitoring
 
 ---
 
@@ -222,15 +270,20 @@ Roles:
 * Dark Mode
 * Advanced Analytics
 * Satellite Communication Integration
+* AI-Based Disaster Prediction
+* Mobile Application Support
 
 ---
 
 ## Author
 
-Aditya Verma
+**Aditya Verma**
+
+Third-Year Engineering Student
 
 ---
 
 ## License
 
 This project is developed for educational, research, and disaster management purposes.
+© 2026 Aditya Verma. All rights reserved.

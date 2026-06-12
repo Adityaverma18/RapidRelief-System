@@ -1,135 +1,306 @@
-# Intelligent Disaster Management System — Backend
+# 🌍 RapidRelief - Intelligent Disaster Management System
 
-A scalable disaster management backend system built using Node.js, Express.js, MongoDB, Python FastAPI, Machine Learning, and KD-tree spatial optimization.
+🚀 **Frontend (Live Demo)**
+https://rapid-relief-system-cs4ihclf5-aditya-vermas-projects-835bd38a.vercel.app/
 
----
+🔗 **Backend API (Node.js)**
+https://rapidrelief-system.onrender.com
 
-# 🚀 Features
-
-## 🔐 Authentication & Authorization
-- JWT authentication
-- Session management
-- Role-based access control
-- User / Rescue / Admin roles
+🧠 **Machine Learning Service (FastAPI)**
+https://rapidreliefsystempythonservices.onrender.com
 
 ---
 
-## 🚨 Incident Management
-- Create disaster incidents
-- Track incident lifecycle
-- Store geolocation data
-- Real-time updates
+# 📖 Overview
+
+RapidRelief is a full-stack Intelligent Disaster Management System designed to enhance disaster response through real-time coordination, resource optimization, machine learning predictions, and spatial allocation algorithms.
+
+The system provides dedicated interfaces for:
+
+* Citizens
+* Rescue Personnel
+* Administrators
+
+RapidRelief integrates modern web technologies, real-time communication, machine learning, and geospatial optimization to assist disaster management agencies in making faster and more effective decisions during emergencies.
 
 ---
 
-## 🚑 Rescue Management
-- Rescue personnel verification
-- Task assignment
-- Rescue status tracking
-- Document uploads
+# 🚀 Key Features
+
+## 👤 Citizen Portal
+
+* User Registration & Login
+* Disaster Incident Reporting
+* Emergency Assistance Requests
+* Incident Status Tracking
+* Nearby Assistance Centers
+* Safe Zone & Shelter Discovery
 
 ---
 
-## 🧠 ML + Optimization
-- Python FastAPI ML microservice
-- Multi-output regression
-- Predict:
-  - rescue teams
-  - ambulances
-  - food packets
-  - medical kits
-- KD-tree nearest rescue allocation
+## 🚑 Rescue Personnel Portal
+
+* Rescue Dashboard
+* Mission Assignment Management
+* Availability Updates
+* Live Incident Tracking
+* Profile Management
+* Document Verification
 
 ---
 
-## ⚡ Real-Time System
-- Socket.IO integration
-- Live incident updates
-- Rescue tracking
-- Status notifications
+## 🛡️ Administrator Portal
+
+* Incident Monitoring
+* Rescue Personnel Verification
+* Resource Management
+* Analytics Dashboard
+* AI Prediction Monitoring
+* System Administration
 
 ---
 
-## ☁️ Cloud Integration
-- MongoDB Atlas
-- Cloudinary document storage
+## ⚡ Real-Time Communication
+
+* Live Incident Updates
+* Rescue Assignment Notifications
+* Status Tracking
+* Socket.IO Integration
+* Real-Time Dashboard Updates
 
 ---
 
-# 🏗️ Tech Stack
+## 🗺️ Geospatial Features
 
-| Layer | Technology |
-|---|---|
-| Backend | Node.js + Express.js |
-| Database | MongoDB |
-| ML Service | FastAPI |
-| ML Library | scikit-learn |
-| Spatial Optimization | SciPy KD-tree |
-| Real-Time | Socket.IO |
-| Cloud Storage | Cloudinary |
+* Interactive Maps
+* Incident Visualization
+* Rescue Team Tracking
+* Assistance Center Locations
+* Safe Zone Mapping
+* Live Location Monitoring
 
 ---
 
-# 📁 Backend Structure
+## 🧠 AI & Machine Learning
+
+The integrated FastAPI ML service predicts:
+
+* Rescue Teams Required
+* Ambulances Required
+* Food Packets Required
+* Medical Kits Required
+
+Prediction factors include:
+
+* Disaster Severity
+* Population Density
+* Rainfall
+* Medical Need Level
+* Infrastructure Damage
+* Road Blockage
+* Disaster Type
+
+---
+
+## 🌍 Spatial Optimization
+
+RapidRelief utilizes KD-Tree nearest-neighbor search algorithms to:
+
+* Locate Nearby Rescue Teams
+* Optimize Resource Allocation
+* Minimize Response Time
+* Improve Rescue Efficiency
+
+---
+
+# 🏗️ System Architecture
+
+```text
+Citizen / Rescue / Admin
+            │
+            ▼
+      React Frontend
+            │
+            ▼
+      Node.js Backend
+            │
+   ┌────────┴────────┐
+   ▼                 ▼
+MongoDB Atlas   FastAPI ML Service
+                        │
+                        ▼
+                 ML Prediction Engine
+                 + KD-Tree Allocation
+```
+
+---
+
+# 🛠️ Tech Stack
+
+## Frontend
+
+| Technology       | Purpose                 |
+| ---------------- | ----------------------- |
+| React            | UI Development          |
+| Vite             | Build Tool              |
+| Tailwind CSS     | Styling                 |
+| React Router DOM | Routing                 |
+| Axios            | API Requests            |
+| Socket.IO Client | Real-Time Communication |
+| React Leaflet    | Maps Integration        |
+
+---
+
+## Backend
+
+| Technology | Purpose                 |
+| ---------- | ----------------------- |
+| Node.js    | Backend Runtime         |
+| Express.js | REST API                |
+| MongoDB    | Database                |
+| Socket.IO  | Real-Time Communication |
+| JWT        | Authentication          |
+| Cloudinary | File Storage            |
+| Multer     | File Uploads            |
+
+---
+
+## Machine Learning Service
+
+| Technology    | Purpose              |
+| ------------- | -------------------- |
+| FastAPI       | ML Microservice      |
+| scikit-learn  | Machine Learning     |
+| Pandas        | Data Processing      |
+| NumPy         | Numerical Computing  |
+| SciPy KD-Tree | Spatial Optimization |
+
+---
+
+# 📂 Project Structure
 
 ```bash
-backend/
+RapidRelief/
 │
-│──Node_backend
+├── frontend/
 │   │
 │   ├── src/
-│   │   │
-│   │   ├── config/
-│   │   ├── controllers/
-│   │   ├── middleware/
-│   │   ├── models/
+│   │   ├── api/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── hooks/
+│   │   ├── layouts/
+│   │   ├── pages/
 │   │   ├── routes/
 │   │   ├── services/
 │   │   ├── utils/
-│   │   ├── uploads/
-│   │   └── app.js
+│   │   ├── App.jsx
+│   │   └── main.jsx
 │   │
-│   │──.env
-│   │── index.js
-│   ├── package-lock.json
-│   └── package.json
-│ 
+│   ├── public/
+│   ├── package.json
+│   └── vite.config.js
 │
-│──Python_backend
+├── backend/
 │   │
-│   ├── app/
+│   ├── Node_backend/
+│   │   ├── src/
+│   │   │   ├── config/
+│   │   │   ├── controllers/
+│   │   │   ├── middleware/
+│   │   │   ├── models/
+│   │   │   ├── routes/
+│   │   │   ├── services/
+│   │   │   ├── utils/
+│   │   │   └── uploads/
 │   │   │
-│   │   ├── ml/
-│   │   ├── routes/
-│   │   ├── schemas/
-│   │   ├── services/
-│   │   └── spatial/
+│   │   ├── index.js
+│   │   └── package.json
 │   │
-│   │── __pycachae__
-│   │── main.py
-│   └── requirement.txt
+│   └── Python_backend/
+│       ├── app/
+│       │   ├── ml/
+│       │   ├── routes/
+│       │   ├── schemas/
+│       │   ├── services/
+│       │   └── spatial/
+│       │
+│       ├── main.py
+│       └── requirements.txt
 │
 └── README.md
 ```
 
-## ⚙️ Installation
+---
 
-# 1. Clone Repository
+# ⚙️ Local Setup
+
+## 1. Clone Repository
 
 ```bash
 git clone <repository_url>
+cd RapidRelief
 ```
 
-# 2. Install Dependencies
+---
+
+## 2. Frontend Setup
 
 ```bash
+cd frontend
 npm install
+npm run dev
 ```
 
-# 3. Create .env
+Frontend runs on:
+
+```text
+http://localhost:5173
+```
+
+---
+
+## 3. Node.js Backend Setup
 
 ```bash
-PORT=3000
+cd backend/Node_backend
+npm install
+npm start
+```
+
+Backend runs on:
+
+```text
+http://localhost:8000
+```
+
+---
+
+## 4. FastAPI ML Service Setup
+
+```bash
+cd backend/Python_backend
+
+pip install -r requirements.txt
+
+uvicorn main:app --reload --port 5001
+```
+
+ML Service runs on:
+
+```text
+http://localhost:5001
+```
+
+---
+
+# 🔑 Environment Variables
+
+## Node Backend
+
+```env
+PORT=8000
 
 MONGO_URI=your_mongodb_uri
 
@@ -144,118 +315,95 @@ CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 ```
 
-## ▶️ Run Backend
-# Development Mode
+---
 
-```bash
-npm start
+## Frontend
+
+```env
+VITE_API_URL=http://localhost:8000/api
+
+VITE_SOCKET_URL=http://localhost:8000
+
+VITE_BACKEND_URL=http://localhost:8000
 ```
 
-## 🧠 Python ML Service
+---
 
-# The backend communicates with a separate Python FastAPI service for:
+# 📡 API Modules
 
-ML prediction
-KD-tree allocation
+| Module            | Endpoint           |
+| ----------------- | ------------------ |
+| Authentication    | /api/auth/*        |
+| Incidents         | /api/incidents/*   |
+| Rescue Management | /api/rescue/*      |
+| Assignments       | /api/assignments/* |
+| Administration    | /api/admin/*       |
 
-Python service runs on:
+---
 
-```bash
-http://localhost:5001
-```
+# 🔐 Security Features
 
-## 📡 API Modules
+* JWT Authentication
+* Password Hashing with bcrypt
+* Role-Based Authorization
+* Protected Routes
+* Session Validation
+* Secure File Upload Validation
+* Cloudinary Storage Integration
 
-Module	Endpoint
-Auth	/api/auth/*
-Incident	/api/incidents/*
-Rescue	/api/rescue/*
-Assignment	/api/assignments/*
-Admin	/api/admin/*
+---
 
-## 🔐 Authentication
+# 📂 File Upload Support
 
-Uses:
+Supported file formats:
 
-JWT tokens
-Session model validation
+* PDF
+* JPG
+* JPEG
+* PNG
 
-Protected routes require:
-```bash
-Authorization: Bearer <token>
-```
+Storage:
 
-## 📂 File Uploads
+* Cloudinary
 
-Uploads handled using:
+---
 
-Multer
-Cloudinary
-
-Supported file types:
-
-PDF
-JPG
-PNG
-## ⚡ Real-Time Events
+# ⚡ Real-Time Events
 
 Socket.IO events include:
 
-incident updates
-rescue assignments
-status changes
-live tracking
-## 🧠 Machine Learning
+* Incident Updates
+* Rescue Assignments
+* Status Changes
+* Resource Updates
+* Live Tracking
 
-The ML pipeline predicts:
+---
 
-teams required
-ambulances required
-food packets required
-medical kits required
+# 🚀 Future Enhancements
 
-Based on:
+* Progressive Web App (PWA)
+* Offline Incident Reporting
+* Push Notifications
+* Multi-Language Support
+* Mobile Application
+* SMS/Satellite Fallback Communication
+* Traffic-Aware Routing
+* Advanced Analytics Dashboard
+* AI-Based Disaster Forecasting
 
-severity
-population
-disaster type
-rainfall
-infrastructure damage
-road blockage
-medical need level
-more
+---
 
-## 🌍 Spatial Optimization
+# 👨‍💻 Author
 
-KD-tree nearest-neighbor search is used to:
-
-locate nearest rescue teams
-optimize response allocation
-
-
-## 🛡️ Security Features
-Password hashing using bcrypt
-JWT authentication
-Role-based authorization
-Session tracking
-File validation
-Protected upload routes
-## 🚀 Future Improvements
-Live map tracking
-Offline-first support
-SMS/Satellite fallback
-Advanced analytics
-Traffic-aware routing
-AI-based prioritization
-
-## 👨‍💻 Author
-
-Aditya Verma
+**Aditya Verma**
 
 B.Tech Engineering Student
 
 ---
 
-## 📄 License
+# 📄 License
 
-This project is for educational and research purposes.
+This project is developed for educational, research, and disaster management purposes.
+
+© 2026 Aditya Verma. All Rights Reserved.
