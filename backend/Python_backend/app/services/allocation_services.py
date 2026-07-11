@@ -1,6 +1,10 @@
 from app.ml.predictor import predict_resources
-from app.spatial.kd_tree import find_nearest_resources
 from app.spatial.geo_utils import is_valid_coordinate
+from app.spatial.orthogonal_range import (
+    calculate_search_radius,
+    create_search_rectangle,
+    orthogonal_range_search,
+)
 
 
 def allocate_resources(data):
@@ -19,37 +23,65 @@ def allocate_resources(data):
         if is_valid_coordinate(resource["lat"], resource["lon"])
     ]
 
+    predictions = predict_resources(data)
+
+    teams_required = predictions["teams_required"]
+
     if not valid_resources:
-        predictions = predict_resources(data)
         return {
             "teams_required": predictions["teams_required"],
             "ambulances_required": predictions["ambulances_required"],
             "food_packets_required": predictions["food_packets_required"],
             "medical_kits_required": predictions["medical_kits_required"],
             "allocated": [],
-            "message": "No valid rescue resources available"
+            "message": "No valid rescue resources available",
         }
 
-    predictions = predict_resources(data)
-    teams_required = predictions["teams_required"]
-
-    nearest_resources = find_nearest_resources(
-        valid_resources,
-        [incident_lat, incident_lon],
-        teams_required
+    # ---------- Dynamic Search Radius ----------
+    radius = calculate_search_radius(
+        data.severity,
+        data.affected_population,
+        teams_required,
     )
+
+    # ---------- Dynamic Rectangle ----------
+    min_lat, max_lat, min_lon, max_lon = create_search_rectangle(
+        incident_lat,
+        incident_lon,
+        radius,
+    )
+
+    # ---------- Orthogonal Range Search ----------
+    allocated = orthogonal_range_search(
+        valid_resources,
+        min_lat,
+        max_lat,
+        min_lon,
+        max_lon,
+    )
+
+    # Limit to required teams
+    allocated = allocated[:teams_required]
 
     return {
         "teams_required": predictions["teams_required"],
         "ambulances_required": predictions["ambulances_required"],
         "food_packets_required": predictions["food_packets_required"],
         "medical_kits_required": predictions["medical_kits_required"],
-        "allocated": nearest_resources,
-        "message": "Allocation successful"
+        "allocated": allocated,
+        "search_radius_km": radius,
+        "search_rectangle": {
+            "min_lat": min_lat,
+            "max_lat": max_lat,
+            "min_lon": min_lon,
+            "max_lon": max_lon,
+        },
+        "message": "Allocation successful",
     }
 
 
-def find_nearby_centers(location, centers, k=5):
+def find_nearby_centers(location, centers, limit=5):
+
     resources = [
         {
             "id": center["id"],
@@ -65,10 +97,21 @@ def find_nearby_centers(location, centers, k=5):
     if not resources:
         return []
 
-    nearest = find_nearest_resources(
-        resources,
-        [location[0], location[1]],
-        min(k, len(resources))
+    # Fixed radius for nearby center search
+    radius = 10
+
+    min_lat, max_lat, min_lon, max_lon = create_search_rectangle(
+        location[0],
+        location[1],
+        radius,
     )
 
-    return nearest
+    nearby = orthogonal_range_search(
+        resources,
+        min_lat,
+        max_lat,
+        min_lon,
+        max_lon,
+    )
+
+    return nearby[:limit]
